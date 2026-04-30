@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestor de Pendientes</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="authView" class="auth-layout">
+        <div class="brand-panel">
+          <p class="eyebrow">Secretaria administrativa</p>
+          <h1>Gestor de trabajos pendientes</h1>
+          <p>
+            Controla tareas por prioridad, fecha de entrega y estado. Cada
+            secretaria entra con su propio usuario y contrasena.
+          </p>
+        </div>
+
+        <div class="auth-panel">
+          <div class="tabs" role="tablist" aria-label="Acceso">
+            <button class="tab active" id="loginTab" type="button">Entrar</button>
+            <button class="tab" id="registerTab" type="button">Crear usuario</button>
+          </div>
+
+          <form id="loginForm" class="form-stack">
+            <h2>Inicio de sesion</h2>
+            <label>
+              Usuario
+              <input id="loginUser" name="usuario" autocomplete="username" required>
+            </label>
+            <label>
+              Contrasena
+              <input id="loginPassword" name="contrasena" type="password" autocomplete="current-password" required>
+            </label>
+            <button class="primary-btn" type="submit">Entrar</button>
+          </form>
+
+          <form id="registerForm" class="form-stack hidden">
+            <h2>Nuevo usuario</h2>
+            <label>
+              Nombre completo
+              <input id="registerName" name="nombre" autocomplete="name" required>
+            </label>
+            <label>
+              Usuario
+              <input id="registerUser" name="usuario" autocomplete="username" required>
+            </label>
+            <label>
+              Contrasena
+              <input id="registerPassword" name="contrasena" type="password" minlength="6" autocomplete="new-password" required>
+            </label>
+            <button class="primary-btn" type="submit">Crear y entrar</button>
+          </form>
+
+          <p id="authMessage" class="message" role="status"></p>
+        </div>
+      </section>
+
+      <section id="dashboardView" class="dashboard hidden">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Panel de pendientes</p>
+            <h1 id="welcomeTitle">Buenos dias</h1>
+          </div>
+          <button id="logoutBtn" class="ghost-btn" type="button">Cerrar sesion</button>
+        </header>
+
+        <section class="summary-grid" aria-label="Resumen de pendientes">
+          <article class="summary-card urgent">
+            <span id="urgentCount">0</span>
+            <p>Urgentes</p>
+          </article>
+          <article class="summary-card high">
+            <span id="highCount">0</span>
+            <p>Alta prioridad</p>
+          </article>
+          <article class="summary-card open">
+            <span id="openCount">0</span>
+            <p>Abiertos</p>
+          </article>
+          <article class="summary-card done">
+            <span id="doneCount">0</span>
+            <p>Terminados</p>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <form id="taskForm" class="task-form">
+            <h2 id="formTitle">Agregar trabajo</h2>
+            <input id="taskId" type="hidden">
+
+            <label>
+              Trabajo pendiente
+              <input id="taskTitle" required placeholder="Ej. Preparar expediente">
+            </label>
+
+            <label>
+              Solicitante o cliente
+              <input id="taskClient" placeholder="Ej. Direccion general">
+            </label>
+
+            <div class="two-columns">
+              <label>
+                Prioridad
+                <select id="taskPriority" required>
+                  <option value="urgent">Urgente</option>
+                  <option value="high">Alta</option>
+                  <option value="medium" selected>Media</option>
+                  <option value="low">Baja</option>
+                </select>
+              </label>
+
+              <label>
+                Fecha limite
+                <input id="taskDueDate" type="date">
+              </label>
+            </div>
+
+            <label>
+              Estado
+              <select id="taskStatus">
+                <option value="open">Pendiente</option>
+                <option value="progress">En proceso</option>
+                <option value="done">Terminado</option>
+              </select>
+            </label>
+
+            <label>
+              Notas
+              <textarea id="taskNotes" rows="4" placeholder="Detalles, documentos o llamadas necesarias"></textarea>
+            </label>
+
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">Guardar</button>
+              <button id="cancelEditBtn" class="ghost-btn hidden" type="button">Cancelar</button>
+            </div>
+          </form>
+
+          <section class="task-board">
+            <div class="board-header">
+              <div>
+                <h2>Trabajos pendientes</h2>
+                <p>Ordenados automaticamente por prioridad y fecha.</p>
+              </div>
+              <select id="statusFilter" aria-label="Filtrar por estado">
+                <option value="all">Todos</option>
+                <option value="open">Pendientes</option>
+                <option value="progress">En proceso</option>
+                <option value="done">Terminados</option>
+              </select>
+            </div>
+
+            <div id="taskList" class="task-list"></div>
+            <p id="emptyState" class="empty-state hidden">No hay trabajos para mostrar.</p>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
